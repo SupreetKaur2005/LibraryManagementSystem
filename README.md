@@ -1,3 +1,3 @@
 # LibraryManagementSystem
- A group project Purely based in java
+ A group project Purely based on java
 
