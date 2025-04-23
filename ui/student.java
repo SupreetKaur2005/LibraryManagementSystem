@@ -1,5 +1,6 @@
 package model;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Student extends User {
@@ -8,18 +9,29 @@ public class Student extends User {
     private String course;
     private int academicYear;
 
- 
     private static final int MAX_BORROW_LIMIT = 5;
 
     public Student(String username, String password, String name, String email,
                    String studentId, String course, int academicYear) {
-        super(username, password, name, email, Role.STUDENT); 
+        super(username, password, name, email, Role.STUDENT);
         this.studentId = studentId;
         this.course = course;
         this.academicYear = academicYear;
     }
 
- 
+    public List<String> getDashboardOptions() {
+        return List.of(
+                "Borrow Books",
+                "Return Books",
+                "View Status",
+                "Request New Books",
+                "Reissue Books",
+                "Notifications",
+                "Logout"
+        );
+    }
+
+
     public String getStudentId() {
         return studentId;
     }
@@ -48,9 +60,8 @@ public class Student extends User {
         return MAX_BORROW_LIMIT;
     }
 
-
     public String getProfileSummary() {
-        return String.format("🎓 %s (%s, Year %d)", getName(), course, academicYear);
+        return String.format("📘 %s (%s - Year %d)", getName(), course, academicYear);
     }
 
     @Override
