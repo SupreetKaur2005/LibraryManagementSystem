@@ -55,9 +55,9 @@ public class DatabaseConnection {
 
         // Check if the connection is not null
         if (conn != null) {
-            System.out.println("🎉 Test: Connection established successfully!");
+            System.out.println(" Test: Connection established successfully!");
         } else {
-            System.out.println("🚫 Test: Connection failed.");
+            System.out.println("Test: Connection failed.");
         }
 
         // Close the connection to clean up
