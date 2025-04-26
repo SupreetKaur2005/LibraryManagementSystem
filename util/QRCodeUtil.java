@@ -23,3 +23,6 @@ public class QRCodeUtil {
         }
     }
 }
+
+
+//com.google to be added in jar lib /lib file
