@@ -1,4 +1,4 @@
-package Admin;
+package ui.admin;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

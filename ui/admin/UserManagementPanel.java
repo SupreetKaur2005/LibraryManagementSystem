@@ -1,9 +1,8 @@
-package Admin;
+package ui.admin;
 
+import java.awt.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
-import java.awt.event.*;
 
 public class UserManagementPanel extends JFrame {
 
