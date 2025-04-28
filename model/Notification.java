@@ -1,24 +1,32 @@
 package model;
 
+import java.time.LocalDateTime;
+
 public class Notification {
 
-    private int notificationId;
+    private int id; // Changed from notificationId
     private int userId;
     private String message;
-    private boolean isRead;
+    private String type; // Added to align with DAO
+    private LocalDateTime dateSent; // Added to align with DAO
+    private String status; // Added to align with DAO
 
-    public Notification(int userId, String message) {
+    public Notification(int userId, String message, String type) {
         this.userId = userId;
         this.message = message;
-        this.isRead = false;
+        this.type = type;
+        this.dateSent = LocalDateTime.now();
+        this.status = "Unread"; // Default status
     }
 
-    public int getNotificationId() {
-        return notificationId;
+    public Notification() {}
+
+    public int getId() {
+        return id;
     }
 
-    public void setNotificationId(int notificationId) {
-        this.notificationId = notificationId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getUserId() {
@@ -37,11 +45,27 @@ public class Notification {
         this.message = message;
     }
 
-    public boolean isRead() {
-        return isRead;
+    public String getType() {
+        return type;
     }
 
-    public void setRead(boolean read) {
-        isRead = read;
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public LocalDateTime getDateSent() {
+        return dateSent;
+    }
+
+    public void setDateSent(LocalDateTime dateSent) {
+        this.dateSent = dateSent;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

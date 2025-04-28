@@ -2,11 +2,10 @@ package dao;
 
 import database.DatabaseConnection;
 import exception.DatabaseException;
-import model.Notification;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import model.Notification;
 
 public class NotificationDAO {
 

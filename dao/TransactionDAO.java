@@ -2,11 +2,10 @@ package dao;
 
 import database.DatabaseConnection;
 import exception.DatabaseException;
-import model.Transaction;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import model.Transaction;
 
 public class TransactionDAO {
 
@@ -102,10 +101,10 @@ public class TransactionDAO {
             while (rs.next()) {
                 transactions.add(extractTransactionFromResultSet(rs));
             }
-
         } catch (SQLException e) {
             throw new DatabaseException("Failed to retrieve transactions", e);
         }
+
         return transactions;
     }
 
@@ -117,12 +116,10 @@ public class TransactionDAO {
         transaction.setBookId(rs.getInt("book_id"));
         transaction.setBorrowDate(rs.getDate("borrow_date").toLocalDate());
         transaction.setDueDate(rs.getDate("due_date").toLocalDate());
-        Date returnDate = rs.getDate("return_date");
-        if (returnDate != null) {
-            transaction.setReturnDate(returnDate.toLocalDate());
+        if (rs.getDate("return_date") != null) {
+            transaction.setReturnDate(rs.getDate("return_date").toLocalDate());
         }
         transaction.setStatus(rs.getString("status"));
         return transaction;
     }
 }
-

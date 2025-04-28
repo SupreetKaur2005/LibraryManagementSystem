@@ -114,7 +114,7 @@ public class RequestDAO {
                 requests.add(extractRequestFromResultSet(rs));
             }
         } catch (SQLException e) {
-            throw new DatabaseException("Failed to retrieve book requests for book", e);
+            throw new DatabaseException("Failed to retrieve book requests", e);
         }
 
         return requests;

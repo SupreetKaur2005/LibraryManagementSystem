@@ -4,42 +4,45 @@ import java.util.Date;
 
 public class Fine {
 
-    private int fineId;
-    private int userId;
+    private int id; // Renamed from fineId to match DAO
+    private int transactionId; // Added to align with DAO
     private double amount;
+    private String status; // Added to align with DAO
     private Date fineDate;
 
-    public Fine(int fineId, int userId, double amount, Date fineDate) {
-        this.fineId = fineId;
-        this.userId = userId;
+    public Fine(int id, int transactionId, double amount, String status, Date fineDate) {
+        this.id = id;
+        this.transactionId = transactionId;
         this.amount = amount;
+        this.status = status;
         this.fineDate = fineDate;
     }
 
     // ✅ New constructor for quick fine creation
-    public Fine(int userId, double amount) {
-        this.userId = userId;
+    public Fine(int transactionId, double amount) {
+        this.transactionId = transactionId;
         this.amount = amount;
+        this.status = "Unpaid"; // Default status
         this.fineDate = new Date(); // fine date as today
     }
 
     public Fine() {
     }
 
-    public int getFineId() {
-        return fineId;
+    public int getId() {
+        return id;
     }
 
-    public void setFineId(int fineId) {
-        this.fineId = fineId;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getTransactionId() {
+        return transactionId;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setTransactionId(int transactionId) {
+        this.transactionId = transactionId;
     }
 
     public double getAmount() {
@@ -48,6 +51,14 @@ public class Fine {
 
     public void setAmount(double amount) {
         this.amount = amount;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Date getFineDate() {

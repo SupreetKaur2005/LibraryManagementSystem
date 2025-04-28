@@ -2,21 +2,20 @@ package dao;
 
 import database.DatabaseConnection;
 import exception.DatabaseException;
-import model.Book;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import model.Book;
 
 public class BookDAO {
 
     // Add a new book
     public void addBook(Book book) throws DatabaseException {
-        String sql = "INSERT INTO books (id, title, author, publisher, year, isbn, quantity) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO books (bookId, title, author, publisher, year, isbn, quantity) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, book.getId());
+            stmt.setInt(1, book.getBookId());
             stmt.setString(2, book.getTitle());
             stmt.setString(3, book.getAuthor());
             stmt.setString(4, book.getPublisher());
@@ -32,7 +31,7 @@ public class BookDAO {
 
     // Get book by ID
     public Book getBookById(int id) throws DatabaseException {
-        String sql = "SELECT * FROM books WHERE id = ?";
+        String sql = "SELECT * FROM books WHERE bookId = ?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -51,7 +50,7 @@ public class BookDAO {
 
     // Update a book
     public void updateBook(Book book) throws DatabaseException {
-        String sql = "UPDATE books SET title = ?, author = ?, publisher = ?, year = ?, isbn = ?, quantity = ? WHERE id = ?";
+        String sql = "UPDATE books SET title = ?, author = ?, publisher = ?, year = ?, isbn = ?, quantity = ? WHERE bookId = ?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -61,7 +60,7 @@ public class BookDAO {
             stmt.setInt(4, book.getYear());
             stmt.setString(5, book.getIsbn());
             stmt.setInt(6, book.getQuantity());
-            stmt.setInt(7, book.getId());
+            stmt.setInt(7, book.getBookId());
 
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -71,7 +70,7 @@ public class BookDAO {
 
     // Delete a book
     public void deleteBook(int id) throws DatabaseException {
-        String sql = "DELETE FROM books WHERE id = ?";
+        String sql = "DELETE FROM books WHERE bookId = ?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -104,7 +103,7 @@ public class BookDAO {
     // Helper method to map ResultSet to Book object
     private Book extractBookFromResultSet(ResultSet rs) throws SQLException {
         Book book = new Book();
-        book.setId(rs.getInt("id"));
+        book.setBookId(rs.getInt("bookId"));
         book.setTitle(rs.getString("title"));
         book.setAuthor(rs.getString("author"));
         book.setPublisher(rs.getString("publisher"));

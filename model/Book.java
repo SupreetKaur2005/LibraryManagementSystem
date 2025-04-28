@@ -8,6 +8,12 @@ public class Book {
     private String genre;
     private boolean isAvailable;
 
+    // Additional fields required by BookDAO
+    private String publisher;
+    private int year;
+    private String isbn;
+    private int quantity;
+
     public Book(int bookId, String title, String author, String genre, boolean isAvailable) {
         this.bookId = bookId;
         this.title = title;
@@ -16,9 +22,9 @@ public class Book {
         this.isAvailable = isAvailable;
     }
 
-    public Book() {
-    }
+    public Book() {}
 
+    // Existing getters and setters
     public int getBookId() {
         return bookId;
     }
@@ -57,5 +63,38 @@ public class Book {
 
     public void setAvailable(boolean available) {
         isAvailable = available;
+    }
+
+    // Newly added getters and setters
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

@@ -20,6 +20,7 @@ public class Student extends User {
         this.notifications = new ArrayList<>();
     }
 
+    // Getters and Setters
     public List<Book> getBorrowedBooks() {
         return borrowedBooks;
     }
@@ -36,19 +37,19 @@ public class Student extends User {
         this.notifications = notifications;
     }
 
-    // Borrow Book
+    // Borrow a Book
     public void borrowBook(Book book) {
         borrowedBooks.add(book);
-        System.out.println("Book " + book.getTitle() + " borrowed by " + this.getName());
+        System.out.println("Book '" + book.getTitle() + "' borrowed by " + this.getName());
     }
 
-    // Return Book and Pay Fine
+    // Return a Book and Pay Fine
     public void returnBook(Book book, double fineAmount) {
         borrowedBooks.removeIf(b -> b.getBookId() == book.getBookId());
         if (fineAmount > 0) {
-            System.out.println("Fine of " + fineAmount + " paid for book: " + book.getTitle());
+            System.out.println("Fine of $" + fineAmount + " paid for book '" + book.getTitle() + "'.");
         }
-        System.out.println("Book " + book.getTitle() + " returned.");
+        System.out.println("Book '" + book.getTitle() + "' returned.");
     }
 
     // View Borrowing Status
@@ -59,38 +60,38 @@ public class Student extends User {
         }
     }
 
-    // Request New Book
+    // Request a New Book
     public void requestNewBook(String bookTitle) {
-        System.out.println("Request for new book titled '" + bookTitle + "' submitted.");
+        System.out.println("Request for new book titled '" + bookTitle + "' has been submitted.");
     }
 
-    // Request Hold on Book (for a week)
+    // Request a Hold on a Book
     public void requestHoldOnBook(Book book) {
-        System.out.println("Request to hold book '" + book.getTitle() + "' for a week.");
+        System.out.println("Request to hold book '" + book.getTitle() + "' has been placed for a week.");
     }
 
-    // Reissue Borrowed Book
+    // Reissue a Borrowed Book
     public void reissueBook(Book book) {
-        System.out.println("Reissue request for book '" + book.getTitle() + "' submitted.");
+        System.out.println("Reissue request for book '" + book.getTitle() + "' has been submitted.");
     }
 
     // View Notifications
     public void viewNotifications() {
         System.out.println("Notifications for " + this.getName() + ":");
         for (Notification notification : notifications) {
-            System.out.println("- " + notification.getMessage());
+            System.out.println("- [" + notification.getType() + "] " + notification.getMessage() + " (" + notification.getStatus() + ")");
         }
     }
 
-    // Add Notification
-    public void addNotification(String message) {
-        Notification notification = new Notification(this.getUserId(), message);
+    // Add a Notification
+    public void addNotification(String message, String type) {
+        Notification notification = new Notification(this.getUserId(), message, type);
         notifications.add(notification);
         System.out.println("Notification added: " + message);
     }
 
     // Logout
     public void logout() {
-        System.out.println("Student logged out.");
+        System.out.println("Student '" + this.getName() + "' has logged out.");
     }
 }

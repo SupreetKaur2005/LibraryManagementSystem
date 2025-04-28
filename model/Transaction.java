@@ -1,51 +1,48 @@
 package model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Transaction {
 
-    private int transactionId;
-    private int bookId;
+    private int id;
     private int userId;
-    private Date issueDate;
-    private Date returnDate;
-    private double fineAmount;
+    private int bookId;
+    private LocalDate borrowDate;
+    private LocalDate dueDate;
+    private LocalDate returnDate;
+    private String status;
 
-    public Transaction(int transactionId, int bookId, int userId, Date issueDate, Date returnDate, double fineAmount) {
-        this.transactionId = transactionId;
-        this.bookId = bookId;
-        this.userId = userId;
-        this.issueDate = issueDate;
-        this.returnDate = returnDate;
-        this.fineAmount = fineAmount;
-    }
-
-    // ✅ New constructor to allow easy creation while issuing
-    public Transaction(int userId, int bookId) {
-        this.userId = userId;
-        this.bookId = bookId;
-        this.issueDate = new Date();
-        this.returnDate = null;
-        this.fineAmount = 0.0;
-    }
-
+    // Default constructor
     public Transaction() {
     }
 
-    public int getTransactionId() {
-        return transactionId;
-    }
-
-    public void setTransactionId(int transactionId) {
-        this.transactionId = transactionId;
-    }
-
-    public int getBookId() {
-        return bookId;
-    }
-
-    public void setBookId(int bookId) {
+    // Constructor for creating a new transaction
+    public Transaction(int userId, int bookId) {
+        this.userId = userId;
         this.bookId = bookId;
+        this.borrowDate = LocalDate.now(); // Set the borrow date to the current date
+        this.dueDate = borrowDate.plusWeeks(2); // Default due date is 2 weeks from borrow date
+        this.status = "Borrowed"; // Default status
+    }
+
+    // Full constructor for initializing all fields
+    public Transaction(int id, int userId, int bookId, LocalDate borrowDate, LocalDate dueDate, LocalDate returnDate, String status) {
+        this.id = id;
+        this.userId = userId;
+        this.bookId = bookId;
+        this.borrowDate = borrowDate;
+        this.dueDate = dueDate;
+        this.returnDate = returnDate;
+        this.status = status;
+    }
+
+    // Getters and Setters
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getUserId() {
@@ -56,27 +53,43 @@ public class Transaction {
         this.userId = userId;
     }
 
-    public Date getIssueDate() {
-        return issueDate;
+    public int getBookId() {
+        return bookId;
     }
 
-    public void setIssueDate(Date issueDate) {
-        this.issueDate = issueDate;
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
     }
 
-    public Date getReturnDate() {
+    public LocalDate getBorrowDate() {
+        return borrowDate;
+    }
+
+    public void setBorrowDate(LocalDate borrowDate) {
+        this.borrowDate = borrowDate;
+    }
+
+    public LocalDate getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(LocalDate dueDate) {
+        this.dueDate = dueDate;
+    }
+
+    public LocalDate getReturnDate() {
         return returnDate;
     }
 
-    public void setReturnDate(Date returnDate) {
+    public void setReturnDate(LocalDate returnDate) {
         this.returnDate = returnDate;
     }
 
-    public double getFineAmount() {
-        return fineAmount;
+    public String getStatus() {
+        return status;
     }
 
-    public void setFineAmount(double fineAmount) {
-        this.fineAmount = fineAmount;
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
