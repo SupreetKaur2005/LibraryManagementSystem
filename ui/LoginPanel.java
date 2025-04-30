@@ -119,7 +119,8 @@ public class LoginPanel extends JPanel {
                                           "Success", JOptionPane.INFORMATION_MESSAGE);
 
             if (rememberMeCheckBox.isSelected()) {
-              
+                // Handle "Remember Me" functionality here if needed
+                // Save credentials securely
             }
 
         } catch (Exception ex) {
