@@ -1,10 +1,18 @@
 package service;
-public class AuthenticationService {
 
-    public boolean login(String username, String password) {
-        return username.equals("admin") && password.equals("password");
-    }
-    public void logout() {
-        System.out.println("User logged out successfully.");
+import model.User;
+
+public class AuthenticationService {
+    public static User authenticate(String email, String password, String role) throws Exception {
+      
+        if ("admin@example.com".equals(email) && "password".equals(password) && "Admin".equals(role)) {
+            return new User(1, "Admin User", email, password, role, true);
+        } else if ("librarian@example.com".equals(email) && "password".equals(password) && "Librarian".equals(role)) {
+            return new User(2, "Librarian User", email, password, role, true);
+        } else if ("student@example.com".equals(email) && "password".equals(password) && "Student".equals(role)) {
+            return new User(3, "Student User", email, password, role, true);
+        } else {
+            throw new Exception("Invalid credentials");
+        }
     }
 }
