@@ -1,19 +1,22 @@
 package ui;
 
-import service.AuthenticationService;
+import java.security.Provider.Service;
 import model.User;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
 
 public class LoginPanel extends JPanel {
 
-    private JTextField usernameField;
+    private JTextField emailField;
     private JPasswordField passwordField;
     private JComboBox<String> roleComboBox;
     private JButton loginButton;
     private JButton forgotPasswordButton;
+    private JCheckBox rememberMeCheckBox;
+    private JCheckBox showPasswordCheckBox;
 
     public LoginPanel() {
         setLayout(new BorderLayout());
@@ -36,16 +39,14 @@ public class LoginPanel extends JPanel {
         gbc.insets = new Insets(12, 12, 12, 12);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        
         gbc.gridx = 0;
         gbc.gridy = 0;
-        formPanel.add(new JLabel("Username:"), gbc);
+        formPanel.add(new JLabel("Email:"), gbc);
 
         gbc.gridx = 1;
-        usernameField = new JTextField(16);
-        formPanel.add(usernameField, gbc);
+        emailField = new JTextField(16);
+        formPanel.add(emailField, gbc);
 
-   
         gbc.gridx = 0;
         gbc.gridy = 1;
         formPanel.add(new JLabel("Password:"), gbc);
@@ -54,7 +55,6 @@ public class LoginPanel extends JPanel {
         passwordField = new JPasswordField(16);
         formPanel.add(passwordField, gbc);
 
-       
         gbc.gridx = 0;
         gbc.gridy = 2;
         formPanel.add(new JLabel("Select Role:"), gbc);
@@ -63,7 +63,25 @@ public class LoginPanel extends JPanel {
         roleComboBox = new JComboBox<>(new String[]{"Admin", "Librarian", "Student"});
         formPanel.add(roleComboBox, gbc);
 
-     
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.gridwidth = 2;
+        rememberMeCheckBox = new JCheckBox("Remember Me");
+        formPanel.add(rememberMeCheckBox, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.gridwidth = 2;
+        showPasswordCheckBox = new JCheckBox("Show Password");
+        showPasswordCheckBox.addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                passwordField.setEchoChar((char) 0);
+            } else {
+                passwordField.setEchoChar('•');
+            }
+        });
+        formPanel.add(showPasswordCheckBox, gbc);
+
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 0));
         loginButton = new JButton("Login");
         forgotPasswordButton = new JButton("Forgot Password?");
@@ -77,31 +95,34 @@ public class LoginPanel extends JPanel {
         buttonPanel.add(forgotPasswordButton);
 
         gbc.gridx = 0;
-        gbc.gridy = 3;
+        gbc.gridy = 5;
         gbc.gridwidth = 2;
         formPanel.add(buttonPanel, gbc);
 
         add(formPanel, BorderLayout.CENTER);
 
-      
         loginButton.addActionListener((ActionEvent e) -> login());
-        forgotPasswordButton.addActionListener((ActionEvent e) -> 
-            JOptionPane.showMessageDialog(this, "Password recovery is under development.", 
+        forgotPasswordButton.addActionListener((ActionEvent e) ->
+            JOptionPane.showMessageDialog(this, "Password recovery is under development.",
                                           "Coming Soon", JOptionPane.INFORMATION_MESSAGE)
         );
     }
 
     private void login() {
-        String username = usernameField.getText().trim();
+        String email = emailField.getText().trim();
         String password = new String(passwordField.getPassword());
         String role = (String) roleComboBox.getSelectedItem();
 
         try {
-            User user = AuthenticationService.authenticate(username, password, role);
-            JOptionPane.showMessageDialog(this, "Login Successful! Welcome " + user.getUsername(),
+            User user = AuthenticationService.authenticate(email, password, role);
+            JOptionPane.showMessageDialog(this, "Login Successful! Welcome " + user.getName(),
                                           "Success", JOptionPane.INFORMATION_MESSAGE);
 
-          
+            if (rememberMeCheckBox.isSelected()) {
+                // Handle "Remember Me" functionality here if needed
+                // Save credentials securely
+            }
+
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Login Failed: " + ex.getMessage(),
                                           "Error", JOptionPane.ERROR_MESSAGE);
