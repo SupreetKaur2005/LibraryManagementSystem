@@ -7,14 +7,40 @@ import java.util.regex.Pattern;
 import Service.AuthenticationService;
 import exception.AuthenticationException;
 
+/**
+ * Panel for user registration with elegant UI styling
+ */
 public class SignUpPanel extends JPanel {
     private JTextField emailField;
     private JPasswordField passwordField;
     private JComboBox<String> roleComboBox;
     private AuthenticationService authService;
+    private MainFrame mainFrame;
 
+    /**
+     * Constructor that accepts both MainFrame and AuthenticationService
+     * 
+     * @param mainFrame The parent main frame
+     * @param authService The authentication service
+     */
+    public SignUpPanel(MainFrame mainFrame, AuthenticationService authService) {
+        this.mainFrame = mainFrame;
+        this.authService = authService;
+        initializeUI();
+    }
+
+    /**
+     * Constructor that only accepts AuthenticationService (for compatibility)
+     * 
+     * @param authService The authentication service
+     */
     public SignUpPanel(AuthenticationService authService) {
         this.authService = authService;
+        this.mainFrame = null;
+        initializeUI();
+    }
+
+    private void initializeUI() {
         setLayout(new BorderLayout());
         setBackground(new Color(245, 245, 250));
 
@@ -86,14 +112,42 @@ public class SignUpPanel extends JPanel {
 
         // Button Actions
         signUpButton.addActionListener(this::performSignUp);
-        backButton.addActionListener(e -> {
-            // Navigate back to LoginPanel
-            JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
-            topFrame.setContentPane(new LoginPanel(new MainFrame()));
-            topFrame.validate();
-        });
+        backButton.addActionListener(e -> navigateToLogin());
     }
 
+    /**
+     * Navigate back to login screen
+     */
+    private void navigateToLogin() {
+        if (mainFrame != null) {
+            // Use MainFrame's navigation method if available
+            mainFrame.navigateToLogin();
+        } else {
+            // Fallback to the original approach
+            JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+            if (topFrame != null) {
+                // If we can find a MainFrame, use it
+                if (topFrame instanceof MainFrame) {
+                    ((MainFrame) topFrame).navigateToLogin();
+                } else {
+                    // Otherwise create a new one
+                    topFrame.setContentPane(new LoginPanel(new MainFrame(), authService));
+                    topFrame.validate();
+                }
+            } else {
+                // Show error if we can't find a parent frame
+                JOptionPane.showMessageDialog(this, 
+                    "Cannot navigate back to login screen.", 
+                    "Navigation Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    /**
+     * Handle the sign-up process
+     * 
+     * @param e The action event
+     */
     private void performSignUp(ActionEvent e) {
         String email = emailField.getText().trim();
         String password = new String(passwordField.getPassword());
@@ -113,11 +167,20 @@ public class SignUpPanel extends JPanel {
         try {
             authService.addUser(email, password, role);
             JOptionPane.showMessageDialog(this, "Sign Up Successful! You can now log in.");
+            
+            // Navigate back to login screen after successful registration
+            navigateToLogin();
         } catch (AuthenticationException ex) {
             JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
+    /**
+     * Validate email using regex pattern
+     * 
+     * @param email The email to validate
+     * @return true if email is valid, false otherwise
+     */
     private boolean isValidEmail(String email) {
         String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
         return Pattern.matches(emailRegex, email);
