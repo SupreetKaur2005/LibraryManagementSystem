@@ -108,6 +108,25 @@ public class TransactionDAO {
         return transactions;
     }
 
+    // Get all active transactions
+    public List<Transaction> getAllActiveTransactions() throws DatabaseException {
+        List<Transaction> activeTransactions = new ArrayList<>();
+        String sql = "SELECT * FROM transactions WHERE status = 'active'";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                activeTransactions.add(extractTransactionFromResultSet(rs));
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Failed to retrieve active transactions", e);
+        }
+
+        return activeTransactions;
+    }
+
     // Helper method to map ResultSet to Transaction object
     private Transaction extractTransactionFromResultSet(ResultSet rs) throws SQLException {
         Transaction transaction = new Transaction();

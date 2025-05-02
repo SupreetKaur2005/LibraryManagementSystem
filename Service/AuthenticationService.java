@@ -1,9 +1,10 @@
-package service;
+package Service;
 
+import exception.AuthenticationException;
 import model.User;
 
 public class AuthenticationService {
-    public static User authenticate(String email, String password, String role) throws Exception {
+    public static User authenticate(String email, String password, String role) throws AuthenticationException {
       
         if ("admin@example.com".equals(email) && "password".equals(password) && "Admin".equals(role)) {
             return new User(1, "Admin User", email, password, role, true);
@@ -12,7 +13,7 @@ public class AuthenticationService {
         } else if ("student@example.com".equals(email) && "password".equals(password) && "Student".equals(role)) {
             return new User(3, "Student User", email, password, role, true);
         } else {
-            throw new Exception("Invalid credentials");
+            throw new AuthenticationException("Invalid credentials");
         }
     }
 }

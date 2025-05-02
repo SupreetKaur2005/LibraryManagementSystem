@@ -1,4 +1,4 @@
-package service;
+package Service;
 public class ReportService {
 
     public void generateReport() {

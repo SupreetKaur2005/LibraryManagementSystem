@@ -1,6 +1,6 @@
 package thread;
 
-import service.BackupService;
+import Service.BackupService;
 
 public class BackupThread extends Thread {
 

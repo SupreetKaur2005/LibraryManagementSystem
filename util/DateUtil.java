@@ -1,26 +1,38 @@
 package util;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DateUtil {
 
-    public static String formatDate(Date date) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        return sdf.format(date);
+    private static final Logger logger = Logger.getLogger(DateUtil.class.getName());
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+    public static String formatDate(LocalDate date) {
+        if (date == null) {
+            logger.warning("formatDate called with null date");
+            return null;
+        }
+        return date.format(formatter);
     }
 
-    public static Date parseDate(String dateStr) {
+    public static LocalDate parseDate(String dateStr) {
+        if (dateStr == null) {
+            logger.warning("parseDate called with null dateStr");
+            return null;
+        }
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            return sdf.parse(dateStr);
-        } catch (Exception e) {
-            System.err.println("Invalid date format");
+            return LocalDate.parse(dateStr, formatter);
+        } catch (DateTimeParseException e) {
+            logger.log(Level.WARNING, "Invalid date format: " + dateStr, e);
             return null;
         }
     }
 
     public static String currentDate() {
-        return formatDate(new Date());
+        return formatDate(LocalDate.now());
     }
 }

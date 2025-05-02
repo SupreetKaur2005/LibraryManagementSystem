@@ -1,4 +1,4 @@
-package service;
+package Service;
 public class TransactionService {
 
     public void borrowBook(String username, String bookTitle) {

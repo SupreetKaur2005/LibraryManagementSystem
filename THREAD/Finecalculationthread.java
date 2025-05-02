@@ -1,6 +1,6 @@
 package thread;
 
-import service.FineService;
+import Service.FineService;
 
 public class FineCalculationThread extends Thread {
 

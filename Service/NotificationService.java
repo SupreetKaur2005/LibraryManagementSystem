@@ -1,4 +1,4 @@
-package service;
+package Service;
 public class NotificationService {
 
     public void sendNotification(String message, String username) {
