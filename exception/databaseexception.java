@@ -1,4 +1,4 @@
-package src.exception;
+package exception;
 
 /**
  * Exception class for database-related errors
