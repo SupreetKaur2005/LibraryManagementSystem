@@ -1,5 +1,3 @@
-
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
@@ -124,5 +122,24 @@ public class LoginPanel extends JPanel {
             JOptionPane.showMessageDialog(this, "Login Failed: " + ex.getMessage(),
                                           "Error", JOptionPane.ERROR_MESSAGE);
         }
+    }
+    
+    // Add the main method to make this class executable
+    public static void main(String[] args) {
+        // Use SwingUtilities.invokeLater to ensure thread safety
+        SwingUtilities.invokeLater(() -> {
+            // Create a JFrame to host the LoginPanel
+            JFrame frame = new JFrame("Login System");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setSize(450, 500);
+            frame.setLocationRelativeTo(null); // Center on screen
+            
+            // Create and add the LoginPanel
+            LoginPanel loginPanel = new LoginPanel();
+            frame.add(loginPanel);
+            
+            // Display the frame
+            frame.setVisible(true);
+        });
     }
 }
