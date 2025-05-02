@@ -17,7 +17,7 @@ public class LoginPanel extends JPanel {
         setLayout(new BorderLayout());
         setBackground(new Color(245, 245, 250));
 
-        JLabel headerLabel = new JLabel("Welcome to ");
+        JLabel headerLabel = new JLabel("Welcome");
         headerLabel.setFont(new Font("SansSerif", Font.BOLD, 26));
         headerLabel.setHorizontalAlignment(SwingConstants.CENTER);
         headerLabel.setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 10));
