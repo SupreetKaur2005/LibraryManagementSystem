@@ -333,6 +333,71 @@
 //     }
 // }
 
+// package ui;
+
+// import admin.AdminDashboard;
+// import Librarian.LibrarianDashboard;
+// import student.StudentDashboard;
+// import Service.AuthenticationService;
+
+// import javax.swing.*;
+// import java.awt.*;
+
+// public class MainFrame extends JFrame {
+//     private AuthenticationService authService;
+
+//     public MainFrame() {
+//         setTitle("Smart Library Management System");
+//         setSize(800, 600);
+//         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//         setLocationRelativeTo(null);
+
+//         // Initialize AuthenticationService
+//         authService = new AuthenticationService();
+
+//         // Start with LoginPanel
+//         setContentPane(new LoginPanel(this, authService));
+//         setVisible(true);
+//     }
+
+//     public void openPanel(JPanel panel) {
+//         getContentPane().removeAll();
+//         add(panel, BorderLayout.CENTER);
+//         revalidate();
+//         repaint();
+//     }
+
+//     // Getter for AuthenticationService
+//     public AuthenticationService getAuthService() {
+//         return authService;
+//     }
+
+//     public void navigateToDashboard(String role) {
+//         switch (role) {
+//             case "Admin":
+//                 openPanel(new AdminDashboard(this));
+//                 break;
+//             case "Librarian":
+//                 openPanel(new LibrarianDashboard(this));
+//                 break;
+//             case "Student":
+//                 openPanel(new StudentDashboard(this));
+//                 break;
+//             default:
+//                 JOptionPane.showMessageDialog(this, "Unknown role!", "Error", JOptionPane.ERROR_MESSAGE);
+//                 openPanel(new LoginPanel(this, authService));
+//         }
+//     }
+
+//     public void navigateToSignUp() {
+//         openPanel(new SignUpPanel(authService));
+//     }
+
+//     public static void main(String[] args) {
+//         SwingUtilities.invokeLater(() -> new MainFrame().setVisible(true));
+//     }
+// }
+
 package ui;
 
 import admin.AdminDashboard;
@@ -345,6 +410,7 @@ import java.awt.*;
 
 public class MainFrame extends JFrame {
     private AuthenticationService authService;
+    private JLabel statusBar; // StatusBar field to display messages
 
     public MainFrame() {
         setTitle("Smart Library Management System");
@@ -355,8 +421,14 @@ public class MainFrame extends JFrame {
         // Initialize AuthenticationService
         authService = new AuthenticationService();
 
-        // Start with LoginPanel
+        // Initialize the Main Panel
         setContentPane(new LoginPanel(this, authService));
+
+        // Initialize StatusBar
+        statusBar = new JLabel("Ready");
+        statusBar.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        add(statusBar, BorderLayout.SOUTH); // Add StatusBar at the bottom of the frame
+
         setVisible(true);
     }
 
@@ -365,6 +437,11 @@ public class MainFrame extends JFrame {
         add(panel, BorderLayout.CENTER);
         revalidate();
         repaint();
+    }
+
+    // Method to update the status message
+    public void setStatusMessage(String message) {
+        statusBar.setText(message);
     }
 
     // Getter for AuthenticationService
@@ -376,24 +453,30 @@ public class MainFrame extends JFrame {
         switch (role) {
             case "Admin":
                 openPanel(new AdminDashboard(this));
+                setStatusMessage("Admin Dashboard");
                 break;
             case "Librarian":
                 openPanel(new LibrarianDashboard(this));
+                setStatusMessage("Librarian Dashboard");
                 break;
             case "Student":
                 openPanel(new StudentDashboard(this));
+                setStatusMessage("Student Dashboard");
                 break;
             default:
                 JOptionPane.showMessageDialog(this, "Unknown role!", "Error", JOptionPane.ERROR_MESSAGE);
                 openPanel(new LoginPanel(this, authService));
+                setStatusMessage("Unknown role, returning to Login Panel");
         }
     }
 
     public void navigateToSignUp() {
         openPanel(new SignUpPanel(authService));
+        setStatusMessage("Sign Up Panel");
     }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new MainFrame().setVisible(true));
     }
 }
+
