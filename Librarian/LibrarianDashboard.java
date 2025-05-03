@@ -87,6 +87,54 @@
 //     }
 // }
 
+// package Librarian;
+
+// import javax.swing.*;
+// import java.awt.*;
+// import ui.MainFrame;
+
+// public class LibrarianDashboard extends JPanel {
+//     private MainFrame parentFrame;
+
+//     public LibrarianDashboard(MainFrame parentFrame) {
+//         this.parentFrame = parentFrame;
+//         setLayout(new BorderLayout());
+
+//         // Title label
+//         JLabel label = new JLabel("Librarian Dashboard", JLabel.CENTER);
+//         label.setFont(new Font("Arial", Font.BOLD, 24));
+//         add(label, BorderLayout.NORTH);
+
+//         // Buttons panel
+//         JPanel buttonPanel = new JPanel(new GridLayout(6, 1, 10, 10));
+
+//         JButton bookManagementButton = new JButton("Manage Books");
+//         JButton issueBookButton = new JButton("Issue Book");
+//         JButton returnBookButton = new JButton("Return Book");
+//         JButton studentRecordsButton = new JButton("Student Records");
+//         JButton overdueButton = new JButton("Overdue Records");
+//         JButton logoutButton = new JButton("Logout");
+
+//         // Add buttons to the panel
+//         buttonPanel.add(bookManagementButton);
+//         buttonPanel.add(issueBookButton);
+//         buttonPanel.add(returnBookButton);
+//         buttonPanel.add(studentRecordsButton);
+//         buttonPanel.add(overdueButton);
+//         buttonPanel.add(logoutButton);
+
+//         add(buttonPanel, BorderLayout.CENTER);
+
+//         // Button actions
+//         bookManagementButton.addActionListener(e -> parentFrame.openPanel(new BookManagementPanel()));
+//         issueBookButton.addActionListener(e -> parentFrame.openPanel(new IssueBookPanel()));
+//         returnBookButton.addActionListener(e -> parentFrame.openPanel(new ReturnBookPanel()));
+//         studentRecordsButton.addActionListener(e -> parentFrame.openPanel(new StudentRecordsPanel()));
+//         overdueButton.addActionListener(e -> parentFrame.openPanel(new OverduePanel()));
+//         logoutButton.addActionListener(e -> parentFrame.openPanel(new ui.LoginPanel(parentFrame)));
+//     }
+// }
+
 package Librarian;
 
 import javax.swing.*;
@@ -106,14 +154,16 @@ public class LibrarianDashboard extends JPanel {
         add(label, BorderLayout.NORTH);
 
         // Buttons panel
-        JPanel buttonPanel = new JPanel(new GridLayout(6, 1, 10, 10));
+        JPanel buttonPanel = new JPanel(new GridLayout(7, 1, 10, 10)); // Adjusted for Back button
 
+        // Buttons
         JButton bookManagementButton = new JButton("Manage Books");
         JButton issueBookButton = new JButton("Issue Book");
         JButton returnBookButton = new JButton("Return Book");
         JButton studentRecordsButton = new JButton("Student Records");
         JButton overdueButton = new JButton("Overdue Records");
         JButton logoutButton = new JButton("Logout");
+        JButton backButton = new JButton("Back"); // Back button
 
         // Add buttons to the panel
         buttonPanel.add(bookManagementButton);
@@ -122,6 +172,7 @@ public class LibrarianDashboard extends JPanel {
         buttonPanel.add(studentRecordsButton);
         buttonPanel.add(overdueButton);
         buttonPanel.add(logoutButton);
+        buttonPanel.add(backButton); // Add Back button
 
         add(buttonPanel, BorderLayout.CENTER);
 
@@ -132,5 +183,6 @@ public class LibrarianDashboard extends JPanel {
         studentRecordsButton.addActionListener(e -> parentFrame.openPanel(new StudentRecordsPanel()));
         overdueButton.addActionListener(e -> parentFrame.openPanel(new OverduePanel()));
         logoutButton.addActionListener(e -> parentFrame.openPanel(new ui.LoginPanel(parentFrame)));
+        backButton.addActionListener(e -> parentFrame.navigateToLogin()); // Back button action
     }
 }

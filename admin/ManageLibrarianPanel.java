@@ -167,3 +167,189 @@ public class ManageLibrarianPanel extends JPanel {
         }
     }
 }
+
+// package admin;
+
+// import javax.swing.*;
+// import javax.swing.table.DefaultTableModel;
+// import java.awt.*;
+// import java.awt.event.ActionEvent;
+// import java.awt.event.ActionListener;
+
+// public class ManageLibrarianPanel extends JPanel {
+//     private MainFrame parentFrame;
+//     private JTable librarianTable;
+//     private DefaultTableModel tableModel;
+//     private JTextField nameField, emailField;
+
+//     public ManageLibrarianPanel(MainFrame parentFrame) {
+//         this.parentFrame = parentFrame;
+//         setLayout(new BorderLayout());
+
+//         // Title Label
+//         JLabel label = new JLabel("Manage Librarians", JLabel.CENTER);
+//         label.setFont(new Font("Arial", Font.BOLD, 24));
+//         add(label, BorderLayout.NORTH);
+
+//         // Top Form
+//         JPanel formPanel = new JPanel(new GridLayout(3, 2, 10, 10));
+//         nameField = new JTextField();
+//         emailField = new JTextField();
+
+//         JButton addButton = new JButton("Add Librarian");
+//         JButton deleteButton = new JButton("Delete Selected");
+//         JButton backButton = new JButton("Back"); // Back button
+
+//         formPanel.add(new JLabel("Name:"));
+//         formPanel.add(nameField);
+//         formPanel.add(new JLabel("Email:"));
+//         formPanel.add(emailField);
+//         formPanel.add(addButton);
+//         formPanel.add(deleteButton);
+
+//         add(formPanel, BorderLayout.SOUTH);
+
+//         // Table
+//         tableModel = new DefaultTableModel(new Object[]{"ID", "Name", "Email"}, 0);
+//         librarianTable = new JTable(tableModel);
+//         JScrollPane scrollPane = new JScrollPane(librarianTable);
+//         add(scrollPane, BorderLayout.CENTER);
+
+//         // Button Actions
+//         addButton.addActionListener(new ActionListener() {
+//             @Override
+//             public void actionPerformed(ActionEvent e) {
+//                 addLibrarian();
+//             }
+//         });
+
+//         deleteButton.addActionListener(new ActionListener() {
+//             @Override
+//             public void actionPerformed(ActionEvent e) {
+//                 deleteSelectedLibrarian();
+//             }
+//         });
+
+//         backButton.addActionListener(e -> parentFrame.openPanel(new AdminDashboard(parentFrame)));
+
+//         // Add Back button to the panel
+//         JPanel backPanel = new JPanel();
+//         backPanel.add(backButton);
+//         add(backPanel, BorderLayout.SOUTH);
+//     }
+
+//     private void addLibrarian() {
+//         String name = nameField.getText().trim();
+//         String email = emailField.getText().trim();
+//         if (name.isEmpty() || email.isEmpty()) {
+//             JOptionPane.showMessageDialog(this, "All fields are required!");
+//             return;
+//         }
+//         int id = tableModel.getRowCount() + 1;
+//         tableModel.addRow(new Object[]{id, name, email});
+//         nameField.setText("");
+//         emailField.setText("");
+//     }
+
+//     private void deleteSelectedLibrarian() {
+//         int selectedRow = librarianTable.getSelectedRow();
+//         if (selectedRow != -1) {
+//             tableModel.removeRow(selectedRow);
+//         } else {
+//             JOptionPane.showMessageDialog(this, "Please select a librarian to delete!");
+//         }
+//     }
+// }
+
+// package admin;
+
+// import javax.swing.*;
+// import javax.swing.table.DefaultTableModel;
+// import java.awt.*;
+// import java.awt.event.ActionEvent;
+// import java.awt.event.ActionListener;
+
+// public class ManageLibrarianPanel extends JPanel {
+//     private MainFrame parentFrame;
+//     private JTable librarianTable;
+//     private DefaultTableModel tableModel;
+//     private JTextField nameField, emailField;
+
+//     public ManageLibrarianPanel(MainFrame parentFrame) {
+//         this.parentFrame = parentFrame;
+//         setLayout(new BorderLayout());
+
+//         // Title Label
+//         JLabel label = new JLabel("Manage Librarians", JLabel.CENTER);
+//         label.setFont(new Font("Arial", Font.BOLD, 24));
+//         add(label, BorderLayout.NORTH);
+
+//         // Top Form
+//         JPanel formPanel = new JPanel(new GridLayout(3, 2, 10, 10));
+//         nameField = new JTextField();
+//         emailField = new JTextField();
+
+//         JButton addButton = new JButton("Add Librarian");
+//         JButton deleteButton = new JButton("Delete Selected");
+//         JButton backButton = new JButton("Back"); // Back button
+
+//         formPanel.add(new JLabel("Name:"));
+//         formPanel.add(nameField);
+//         formPanel.add(new JLabel("Email:"));
+//         formPanel.add(emailField);
+//         formPanel.add(addButton);
+//         formPanel.add(deleteButton);
+
+//         add(formPanel, BorderLayout.SOUTH);
+
+//         // Table
+//         tableModel = new DefaultTableModel(new Object[]{"ID", "Name", "Email"}, 0);
+//         librarianTable = new JTable(tableModel);
+//         JScrollPane scrollPane = new JScrollPane(librarianTable);
+//         add(scrollPane, BorderLayout.CENTER);
+
+//         // Button Actions
+//         addButton.addActionListener(new ActionListener() {
+//             @Override
+//             public void actionPerformed(ActionEvent e) {
+//                 addLibrarian();
+//             }
+//         });
+
+//         deleteButton.addActionListener(new ActionListener() {
+//             @Override
+//             public void actionPerformed(ActionEvent e) {
+//                 deleteSelectedLibrarian();
+//             }
+//         });
+
+//         backButton.addActionListener(e -> parentFrame.openPanel(new AdminDashboard(parentFrame)));
+
+//         // Add Back button to the panel
+//         JPanel backPanel = new JPanel();
+//         backPanel.add(backButton);
+//         add(backPanel, BorderLayout.SOUTH);
+//     }
+
+//     private void addLibrarian() {
+//         String name = nameField.getText().trim();
+//         String email = emailField.getText().trim();
+//         if (name.isEmpty() || email.isEmpty()) {
+//             JOptionPane.showMessageDialog(this, "All fields are required!");
+//             return;
+//         }
+//         int id = tableModel.getRowCount() + 1;
+//         tableModel.addRow(new Object[]{id, name, email});
+//         nameField.setText("");
+//         emailField.setText("");
+//     }
+
+//     private void deleteSelectedLibrarian() {
+//         int selectedRow = librarianTable.getSelectedRow();
+//         if (selectedRow != -1) {
+//             tableModel.removeRow(selectedRow);
+//         } else {
+//             JOptionPane.showMessageDialog(this, "Please select a librarian to delete!");
+//         }
+//     }
+// }
