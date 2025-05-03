@@ -337,6 +337,154 @@
 //     }
 // }
 
+// package database;
+
+// import java.sql.Connection;
+// import java.sql.SQLException;
+// import java.sql.Statement;
+
+// public class DatabaseInitializer {
+
+//     /**
+//      * Initializes the database by creating necessary tables and inserting initial data.
+//      */
+//     public static void initialize() {
+//         Connection con = null;
+//         Statement st = null;
+
+//         try {
+//             // Get the connection
+//             con = DatabaseConnection.getConnection();
+//             st = con.createStatement();
+
+//             // Create schema
+//             createSchema(st);
+
+//             // Insert initial data
+//             insertInitialData(st);
+
+//             System.out.println("Database schema created and initial data inserted successfully!");
+
+//         } catch (SQLException e) {
+//             System.err.println("Error: Database initialization failed");
+//             e.printStackTrace();
+//         } finally {
+//             // Close resources
+//             try {
+//                 if (st != null)
+//                     st.close();
+//                 if (con != null)
+//                     DatabaseConnection.closeConnection();
+//                 System.out.println("---Database initialization completed---");
+//             } catch (SQLException e) {
+//                 System.err.println("Error closing resources");
+//                 e.printStackTrace();
+//             }
+//         }
+//     }
+
+//     private static void createSchema(Statement st) throws SQLException {
+//         String[] schemaStatements = {
+//                 "CREATE TABLE IF NOT EXISTS User (" +
+//                         "user_id INT PRIMARY KEY AUTO_INCREMENT," +
+//                         "username VARCHAR(50) UNIQUE NOT NULL," +
+//                         "password VARCHAR(100) NOT NULL," +
+//                         "name VARCHAR(100)," +
+//                         "email VARCHAR(100) UNIQUE," +
+//                         "role ENUM('Admin', 'Librarian', 'Student') NOT NULL," +
+//                         "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP" +
+//                         ") ENGINE=InnoDB",
+//                 "CREATE TABLE IF NOT EXISTS Admin (" +
+//                         "admin_id INT PRIMARY KEY," +
+//                         "FOREIGN KEY (admin_id) REFERENCES User(user_id) ON DELETE CASCADE" +
+//                         ") ENGINE=InnoDB",
+//                 "CREATE TABLE IF NOT EXISTS Librarian (" +
+//                         "librarian_id INT PRIMARY KEY," +
+//                         "FOREIGN KEY (librarian_id) REFERENCES User(user_id) ON DELETE CASCADE" +
+//                         ") ENGINE=InnoDB",
+//                 "CREATE TABLE IF NOT EXISTS Student (" +
+//                         "student_id INT PRIMARY KEY," +
+//                         "course VARCHAR(100)," +
+//                         "year INT," +
+//                         "FOREIGN KEY (student_id) REFERENCES User(user_id) ON DELETE CASCADE" +
+//                         ") ENGINE=InnoDB",
+//                 "CREATE TABLE IF NOT EXISTS Book (" +
+//                         "book_id INT PRIMARY KEY AUTO_INCREMENT," +
+//                         "title VARCHAR(255) NOT NULL," +
+//                         "author VARCHAR(255)," +
+//                         "publisher VARCHAR(255)," +
+//                         "isbn VARCHAR(20) UNIQUE," +
+//                         "genre VARCHAR(50)," +
+//                         "total_copies INT DEFAULT 1," +
+//                         "available_copies INT DEFAULT 1," +
+//                         "added_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP" +
+//                         ") ENGINE=InnoDB",
+//                 "CREATE TABLE IF NOT EXISTS BookTransaction (" +
+//                         "transaction_id INT PRIMARY KEY AUTO_INCREMENT," +
+//                         "book_id INT NOT NULL," +
+//                         "student_id INT NOT NULL," +
+//                         "issue_date DATE NOT NULL," +
+//                         "due_date DATE NOT NULL," +
+//                         "return_date DATE," +
+//                         "FOREIGN KEY (book_id) REFERENCES Book(book_id)," +
+//                         "FOREIGN KEY (student_id) REFERENCES Student(student_id)" +
+//                         ") ENGINE=InnoDB",
+//                 "CREATE TABLE IF NOT EXISTS Fine (" +
+//                         "fine_id INT PRIMARY KEY AUTO_INCREMENT," +
+//                         "transaction_id INT NOT NULL," +
+//                         "amount DECIMAL(10,2) NOT NULL," +
+//                         "is_paid BOOLEAN DEFAULT FALSE," +
+//                         "FOREIGN KEY (transaction_id) REFERENCES BookTransaction(transaction_id)" +
+//                         ") ENGINE=InnoDB",
+//                 "CREATE TABLE IF NOT EXISTS Notification (" +
+//                         "notification_id INT PRIMARY KEY AUTO_INCREMENT," +
+//                         "user_id INT NOT NULL," +
+//                         "message TEXT," +
+//                         "sent_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP," +
+//                         "is_read BOOLEAN DEFAULT FALSE," +
+//                         "FOREIGN KEY (user_id) REFERENCES User(user_id)" +
+//                         ") ENGINE=InnoDB",
+//                 "CREATE TABLE IF NOT EXISTS BookRequest (" +
+//                         "request_id INT PRIMARY KEY AUTO_INCREMENT," +
+//                         "student_id INT NOT NULL," +
+//                         "book_title VARCHAR(255)," +
+//                         "author VARCHAR(255)," +
+//                         "request_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP, " +
+//                         "status ENUM('Pending','Approved','Rejected') DEFAULT 'Pending'," +
+//                         "FOREIGN KEY (student_id) REFERENCES Student(student_id)" +
+//                         ") ENGINE=InnoDB",
+//                 "CREATE TABLE IF NOT EXISTS BookRating (" +
+//                         "rating_id INT PRIMARY KEY AUTO_INCREMENT," +
+//                         "book_id INT NOT NULL," +
+//                         "student_id INT NOT NULL," +
+//                         "rating INT CHECK (rating BETWEEN 1 AND 5)," +
+//                         "review TEXT," +
+//                         "rating_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP," +
+//                         "FOREIGN KEY (book_id) REFERENCES Book(book_id)," +
+//                         "FOREIGN KEY (student_id) REFERENCES Student(student_id)" +
+//                         ") ENGINE=InnoDB"
+//         };
+//         for (String sql : schemaStatements) {
+//             st.executeUpdate(sql);
+//         }
+//     }
+
+//     private static void insertInitialData(Statement st) throws SQLException {
+//         String userDataSQL = """
+//                     INSERT INTO User (username, password, name, email, role)
+//                     VALUES ('admin', 'admin123', 'Admin User', 'admin@library.com', 'Admin')
+//                     ON DUPLICATE KEY UPDATE username=username;
+//                 """;
+//         st.executeUpdate(userDataSQL);
+//     }
+
+//     public static void main(String[] args) {
+//         System.out.println("Initializing the database...");
+//         initialize();
+//     }
+// }
+
+
 package database;
 
 import java.sql.Connection;
@@ -347,14 +495,21 @@ public class DatabaseInitializer {
 
     /**
      * Initializes the database by creating necessary tables and inserting initial data.
+     * @throws SQLException If database operations fail
      */
-    public static void initialize() {
+    public static void initialize() throws SQLException {
         Connection con = null;
         Statement st = null;
 
         try {
             // Get the connection
             con = DatabaseConnection.getConnection();
+            
+            // Check if connection is valid
+            if (con == null || !con.isValid(5)) {
+                throw new SQLException("Failed to establish a valid database connection");
+            }
+            
             st = con.createStatement();
 
             // Create schema
@@ -366,20 +521,21 @@ public class DatabaseInitializer {
             System.out.println("Database schema created and initial data inserted successfully!");
 
         } catch (SQLException e) {
-            System.err.println("Error: Database initialization failed");
-            e.printStackTrace();
+            System.err.println("Error: Database initialization failed: " + e.getMessage());
+            throw e; // Re-throw to alert the caller
         } finally {
-            // Close resources
-            try {
-                if (st != null)
+            // Close statement resource
+            if (st != null) {
+                try {
                     st.close();
-                if (con != null)
-                    DatabaseConnection.closeConnection();
-                System.out.println("---Database initialization completed---");
-            } catch (SQLException e) {
-                System.err.println("Error closing resources");
-                e.printStackTrace();
+                } catch (SQLException e) {
+                    System.err.println("Error closing statement: " + e.getMessage());
+                }
             }
+            
+            // Don't close the connection here as it might be used by other components
+            // Connection should be closed by the application when it's shutting down
+            System.out.println("---Database initialization completed---");
         }
     }
 
@@ -464,22 +620,49 @@ public class DatabaseInitializer {
                         "FOREIGN KEY (student_id) REFERENCES Student(student_id)" +
                         ") ENGINE=InnoDB"
         };
+        
         for (String sql : schemaStatements) {
-            st.executeUpdate(sql);
+            try {
+                st.executeUpdate(sql);
+            } catch (SQLException e) {
+                System.err.println("Error executing schema statement: " + e.getMessage());
+                System.err.println("SQL: " + sql);
+                throw e; // Re-throw to alert the caller
+            }
         }
     }
 
     private static void insertInitialData(Statement st) throws SQLException {
-        String userDataSQL = """
+        try {
+            String userDataSQL = """
                     INSERT INTO User (username, password, name, email, role)
                     VALUES ('admin', 'admin123', 'Admin User', 'admin@library.com', 'Admin')
                     ON DUPLICATE KEY UPDATE username=username;
                 """;
-        st.executeUpdate(userDataSQL);
+            st.executeUpdate(userDataSQL);
+            
+            // Insert admin record in Admin table
+            String adminDataSQL = """
+                    INSERT INTO Admin (admin_id)
+                    SELECT user_id FROM User WHERE username = 'admin' AND NOT EXISTS 
+                    (SELECT 1 FROM Admin WHERE admin_id = (SELECT user_id FROM User WHERE username = 'admin'))
+                    """;
+            st.executeUpdate(adminDataSQL);
+            
+        } catch (SQLException e) {
+            System.err.println("Error inserting initial data: " + e.getMessage());
+            throw e; // Re-throw to alert the caller
+        }
     }
 
     public static void main(String[] args) {
         System.out.println("Initializing the database...");
-        initialize();
+        try {
+            initialize();
+            System.out.println("Database initialization completed successfully!");
+        } catch (SQLException e) {
+            System.err.println("Failed to initialize database: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }
