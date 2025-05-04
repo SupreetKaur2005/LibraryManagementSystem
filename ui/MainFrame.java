@@ -57,17 +57,17 @@
 //      */
 //     public void openPanel(JPanel panel) {
 //         Container contentPane = getContentPane();
-        
+
 //         // Remove all components except the status bar
 //         for (Component component : contentPane.getComponents()) {
 //             if (!(component == statusBar)) {
 //                 contentPane.remove(component);
 //             }
 //         }
-        
+
 //         // Add the new panel
 //         contentPane.add(panel, BorderLayout.CENTER);
-        
+
 //         // Refresh the UI
 //         revalidate();
 //         repaint();
@@ -120,10 +120,10 @@
 //                     setStatusMessage("Please log in");
 //             }
 //         } catch (Exception e) {
-//             JOptionPane.showMessageDialog(this, "Error loading dashboard: " + e.getMessage(), 
+//             JOptionPane.showMessageDialog(this, "Error loading dashboard: " + e.getMessage(),
 //                                         "Error", JOptionPane.ERROR_MESSAGE);
 //             e.printStackTrace();
-//             openPanel(new LoginPanel(this, authService)); 
+//             openPanel(new LoginPanel(this, authService));
 //             setStatusMessage("Error occurred. Please try again.");
 //         }
 //     }
@@ -135,7 +135,7 @@
 //         openPanel(new SignUpPanel(this, authService));
 //         setStatusMessage("Sign Up");
 //     }
-    
+
 //     /**
 //      * Navigates back to login panel
 //      */
@@ -158,7 +158,7 @@
 //         } catch (Exception e) {
 //             e.printStackTrace();
 //         }
-        
+
 //         SwingUtilities.invokeLater(() -> new MainFrame());
 //     }
 // }
