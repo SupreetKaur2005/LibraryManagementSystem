@@ -92,6 +92,20 @@ public class NotificationPanel extends JPanel {
         centerPanel.add(new JLabel("View your Library Notifications!"));
         add(centerPanel, BorderLayout.CENTER);
 
+        // Replace the placeholder with a dynamic list of notifications
+        JPanel centerPanel = new JPanel();
+        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
+
+// Example: Add notifications dynamically
+        String[] notifications = {"Book 'Java Programming' is due tomorrow", "New books added to the library collection"};
+        for (String notification : notifications) {
+            JLabel notificationLabel = new JLabel(notification);
+            notificationLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+            centerPanel.add(notificationLabel);
+        }
+
+        add(centerPanel, BorderLayout.CENTER);
+
         // Back Button Panel
         JPanel backButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JButton backButton = new JButton("Back");

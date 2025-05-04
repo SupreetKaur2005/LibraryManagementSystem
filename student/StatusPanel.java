@@ -43,6 +43,22 @@ public class StatusPanel extends JPanel {
         centerPanel.add(new JLabel("View your Borrowed, Due, and Returned Books!"));
         add(centerPanel, BorderLayout.CENTER);
 
+        // Replace this placeholder with a table
+        String[] columns = {"Book ID", "Title", "Status"};
+        String[][] data = {
+                {"101", "Java Programming", "Borrowed"},
+                {"102", "Data Structures", "Due"},
+                {"103", "Operating Systems", "Returned"}
+        };
+
+        JTable statusTable = new JTable(data, columns);
+        JScrollPane scrollPane = new JScrollPane(statusTable);
+
+        JPanel centerPanel = new JPanel(new BorderLayout());
+        centerPanel.add(scrollPane, BorderLayout.CENTER);
+
+        add(centerPanel, BorderLayout.CENTER);
+
         // Back Button Panel
         JPanel backButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JButton backButton = new BackButton(parentFrame, new StudentDashboard(parentFrame));
