@@ -21,7 +21,7 @@ public class FineService {
     }
 
     public void payFine(String username, double amount) {
-        System.out.println(username + " paid fine: $" + amount);
+        System.out.println(username + " paid fine: " + amount);
     }
 
     public void calculateFinesForOverdueBooks() {
