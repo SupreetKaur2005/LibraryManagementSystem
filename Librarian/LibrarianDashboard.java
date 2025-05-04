@@ -246,6 +246,12 @@ package Librarian;
 import java.awt.*;
 import javax.swing.*;
 import ui.MainFrame;
+// Import missing panel classes
+import Librarian.panels.BookManagementPanel;
+import Librarian.panels.IssueBookPanel;
+import Librarian.panels.OverduePanel;
+import Librarian.panels.ReturnBookPanel;
+import Librarian.panels.StudentRecordPanel;
 
 public class LibrarianDashboard extends JPanel {
     private final MainFrame parentFrame;
