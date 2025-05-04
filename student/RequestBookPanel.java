@@ -18,7 +18,7 @@
 //     }
 // }
 
-package student;
+/*package student;
 
 import ui.BackButton;
 import ui.MainFrame;
@@ -67,6 +67,68 @@ public class RequestBookPanel extends JPanel {
             System.out.println("Requested book: " + bookTitle + " by " + author + " (" + category + ")");
         });
         centerPanel.add(submitButton);
+
+        add(centerPanel, BorderLayout.CENTER);
+
+        // Back Button Panel
+        JPanel backButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JButton backButton = new BackButton(parentFrame, new StudentDashboard(parentFrame));
+        backButtonPanel.add(backButton);
+        add(backButtonPanel, BorderLayout.SOUTH);
+    }
+}
+
+ */
+package student;
+
+import ui.BackButton;
+import ui.MainFrame;
+
+import javax.swing.*;
+import java.awt.*;
+
+public class RequestBookPanel extends JPanel {
+    private MainFrame parentFrame;
+
+    public RequestBookPanel(MainFrame parentFrame) {
+        this.parentFrame = parentFrame;
+        setLayout(new BorderLayout());
+
+        // Title Label
+        JLabel title = new JLabel("Request New Books", SwingConstants.CENTER);
+        title.setFont(new Font("Segoe UI", Font.BOLD, 24));
+        add(title, BorderLayout.NORTH);
+
+        // Content Panel with Form
+        JPanel centerPanel = new JPanel();
+        centerPanel.setLayout(new GridLayout(4, 2, 10, 10)); // Adjusted the grid layout to accommodate the button
+
+        centerPanel.add(new JLabel("Book Title:"));
+        JTextField bookTitleField = new JTextField();
+        centerPanel.add(bookTitleField);
+
+        centerPanel.add(new JLabel("Author:"));
+        JTextField authorField = new JTextField();
+        centerPanel.add(authorField);
+
+        centerPanel.add(new JLabel("Category:"));
+        JTextField categoryField = new JTextField();
+        centerPanel.add(categoryField);
+
+        // Submit Button
+        JButton submitButton = new JButton("Request Book");
+        submitButton.addActionListener(e -> {
+            String bookTitle = bookTitleField.getText();
+            String author = authorField.getText();
+            String category = categoryField.getText();
+            System.out.println("Requested book: " + bookTitle + " by " + author + " (" + category + ")");
+        });
+
+        // Spanning the entire row for the submit button
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        buttonPanel.add(submitButton);
+        centerPanel.add(new JLabel()); // Placeholder to adjust layout
+        centerPanel.add(buttonPanel);
 
         add(centerPanel, BorderLayout.CENTER);
 
